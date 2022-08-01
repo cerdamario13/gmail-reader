@@ -43,8 +43,16 @@ function get_email_subject() {
       }
     }//outer loop
   
+    //Writing values to sheet
+    for (var i = 0; i <= threads.length; i++){
+      
+      //Writing email subjects
+      sheet.getRange(i + 2, 4).setValue(subject_array[i]);
+      //Wiriting email extraction if any
+      sheet.getRange(i + 2, 5).setValue(values[i]);
+    }
   
-    Logger.log(values)
+    
   }//main function
   
   
