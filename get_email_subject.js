@@ -1,17 +1,27 @@
 function get_email_subject() {
   
-    var ss = SpreadsheetApp.getActiveSheet();
+    var sheet_id = "SHEET_ID";
+    var sheet_name = "getSubject"
+    var sheet = SpreadsheetApp.openById(sheet_id).getSheetByName(sheet_name);
   
     // Get the label by name
-    var label = GmailApp.getUserLabelByName('House Emails');
+    var label_value = sheet.getRange("B2").getValue();
+    var label = GmailApp.getUserLabelByName(label_value);
     // Get the threads for all emails in label
     var threads = label.getThreads();
   
     // Making array short for testing
-    threads = threads.slice(0, 5);
+    var slice_value = sheet.getRange("B3").getValue();
+    if (slice_value == 'ALL'){
+      threads = threads
+    }
+    else {
+      threads = threads.slice(0, parseInt(slice_value));
+    }
   
     // Regex to look for
-    var regExp = new RegExp(/\$\d+/);
+    var regex_value = sheet.getRange("B4").getValue();
+    var regExp = new RegExp(regex_value);
   
     //Iterate to get the subject from each email
   
@@ -32,7 +42,11 @@ function get_email_subject() {
         subject_array.push("");
       }
     }//outer loop
+  
+  
+    Logger.log(values)
   }//main function
+  
   
   
   
